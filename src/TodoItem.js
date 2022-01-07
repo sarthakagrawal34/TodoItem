@@ -1,22 +1,32 @@
 import React from "react";
+import todos from "./todoData";
 
 class TodoItem extends React.Component {
-  // Create a state with properties: id, text, completed.
   constructor() {
     super();
     this.state = {
-      id: 1,
-      text: "My Task",
-      completed: true
+      todos: todos
     };
   }
+  handleChange = () => {
+    this.setState((prevState) => {
+      return { completed: !prevState.completed };
+    });
+  };
   render() {
-    return (
-      <div className="todo-item">
-        <input type="checkbox" defaultChecked={this.state.completed} />
-        <label>{this.state.text}</label>
-      </div>
-    );
+    const { todos } = this.state;
+    return todos.map((todo) => {
+      return (
+        <div className="todo-item">
+          <input
+            type="checkbox"
+            checked={todo.completed}
+            onChange={this.handleChange}
+          />
+          <label> {todo.text} </label>
+        </div>
+      );
+    });
   }
 }
 
